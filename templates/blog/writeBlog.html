@@ -1,0 +1,39 @@
+{% extends "blogModel.html" %}
+{% load static %}
+{% block title %}
+<title>博客主页</title>
+    <link rel="stylesheet" href="{% static 'css/blog/writeBlog.css'%}">
+    <script type="text/javascript" src="{% static 'js/blog/writeBlog.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+{% block main %}
+<div class="main">
+    <div class="writeBlog">
+        {#    这里写一个font表单用于#}
+        <form action="/blog/writeBlog/" method="post" enctype="multipart/form-data">
+            <p id="csrf">{% csrf_token %}</p>
+            <div class="form_Header">
+                <div  class="input-group titleInput">
+                    <span>标题名：</span>{{ myForm.title }}
+                </div>
+                <div  class="input-group typeInput">
+                    <span>分类：</span>{{ myForm.type }}
+                    <div class="input-group add">
+                        <img onclick=alert(); src="{% static 'img/icon/add.png' %}" alt="新增" width="100%">
+                    </div>
+                </div>
+            </div>
+            {{ myForm.content }}
+            <div class="submit"><button type="submit">提交</button></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script>
+    window.onload = function () {
+        document.getElementsByClassName("create")[0].innerHTML="创作 "
+    }
+</script>
+{% endblock %}

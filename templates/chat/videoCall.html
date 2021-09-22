@@ -1,0 +1,147 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>视频通话空间</title>
+    <link rel="stylesheet" href="{% static 'css/videoCall/videoCall.css' %}">
+    <script src="{% static 'js/console.js' %}"></script>
+</head>
+<body>
+    <input id="roomName" type="application/json" hidden value ="{{ roomName }}">
+    <input id="userName" type="application/json" hidden value ="{{ userName }}">
+    <video id="self" autoplay></video>
+    <video id="other" autoplay></video>
+    <input id="chat-message-submit" type="button" value="开始通话" onclick="createOffer()">
+
+{#    <script>#}
+    {#获取视频流并且展示#}
+{#    let vConsole = new VConsole();#}
+{##}
+{##}
+{#    function getStream(){#}
+{#        console.log("进入了")#}
+{#        navigator.mediaDevices.getUserMedia({video:true,audio:false})#}
+{#            .then(stream => {#}
+{#                console.log("成功连接")#}
+{#                selfVideo.srcObject = stream;#}
+{#                selfVideo.play()#}
+{#                window.stream = stream;#}
+{#                Connection.addStream(stream);#}
+{#            })#}
+{#            .catch(error=>{#}
+{#                console.log(error)#}
+{#            })#}
+{#        }#}
+    {#创建websocket连接#}
+{#const roomName = document.getElementById("roomName").value;#}
+{#const userName = document.getElementById("userName").value;#}
+{#const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');#}
+{#获取video的dom#}
+{#var selfVideo=document.getElementById("self")#}
+{#var otherVideo=document.getElementById("other")#}
+{#var Connection;#}
+    {#协商处理以及协商后的视频流交换#}
+{#    function startPeerConnection() {#}
+{#        var config={#}
+{#            iceServers:[#}
+{#                { 'url': 'stun:stun.l.google.com:19302' }#}
+{#            ],#}
+{#            sdpSemantics:"plan-b"#}
+{#        };#}
+{#        config= {#}
+{#            iceServers:[#}
+{#                { urls: 'stun:stun.l.google.com:19302' },#}
+{#                 { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },#}
+{#                {urls: "stun:stun.services.mozilla.com"}#}
+{#            ],#}
+{#            sdpSemantics:'unified-plan'#}
+{#        };#}
+        {#创建了peerConnecton对象#}
+{#        Connection=new RTCPeerConnection(config);#}
+        {#接收到协商时的处理#}
+{#        Connection.onicecandidate=function (peerEvent) {#}
+{#            console.log("等待协商,下面是协商的数据");#}
+{#            console.log(peerEvent)#}
+{#            if (peerEvent.candidate){#}
+{#               chatSocket.send(#}
+{#                   JSON.stringify(#}
+{#                       {"user":userName,#}
+{#                       "event":"ice_candidate",#}
+{#                       "data":{"candidate":peerEvent.candidate}#}
+{#                   }#}
+{#               ))#}
+{#            }#}
+{#        }#}
+        {#接受到视频流的处理#}
+{#        Connection.onaddstream  =function (stream) {#}
+{#            console.log("接受到对方的流了")#}
+{#            otherVideo.srcObject =stream.stream;#}
+{#        }#}
+{#    }#}
+{##}
+{##}
+{#startPeerConnection()//建立自己端的描述，以便后面进行协商#}
+{#getStream()//获取视频流在自己端展示#}
+    {#像对端发起一个连接建议#}
+{#    function createOffer() {#}
+{#        Connection.createOffer()#}
+{#            .then(offer=>{#}
+{#                chatSocket.send(JSON.stringify(#}
+{#                    {#}
+{#                        "userName":userName,#}
+{#                        "event":"offer",#}
+{#                        "data":{"sdp":offer}#}
+{#                    }#}
+{#                )#}
+{#            )#}
+{#        })#}
+{#    }#}
+{#    chatSocket.onmessage=function (event) {#}
+        {#console.log("开始接受信息")#}
+        {#console.log(event.data)#}
+{#        let jsonData=JSON.parse(JSON.parse(event.data));//解析接受到的数据信息#}
+{#        if (jsonData.userName != userName){#}
+{#            //发出信息和收到此信息的不是同一个人时#}
+{#            console.log("收到信息来自"+jsonData.userName)#}
+{#            if(jsonData.event == "ice_candidate" && jsonData.data.candidate){#}
+{#                //如果此次事件标记为协商时的处理#}
+{#                console.log("协商事件")#}
+{#                console.log(jsonData.data.candidate)#}
+{#                var NewCandidate=new RTCIceCandidate({#}
+{#                        "candidate":jsonData.data.candidate.candidate,#}
+{#                        "sdpMLineIndex":jsonData.data.candidate.sdpMLineIndex,#}
+{#                        "sdpMid":jsonData.data.candidate.sdpMid#}
+{#                    })#}
+{#                Connection.addIceCandidate(NewCandidate)#}
+{#            }#}
+{#            else if(jsonData.event =="offer"){#}
+{#                console.log("发起offer事件")#}
+{#                //事件是offer时的一个事件处理#}
+{#                console.log(jsonData.data.sdp)#}
+{#                Connection.setRemoteDescription(jsonData.data.sdp);#}
+{#                Connection.createAnswer()#}
+{#                    .then(answer=>{#}
+{#                        Connection.setLocalDescription(answer);#}
+{#                        chatSocket.send(JSON.stringify(#}
+{#                            {#}
+{#                                "user":userName,#}
+{#                                "event":"answer",#}
+{#                                "data":{"sdp":answer}#}
+{#                            }#}
+{#                        ))#}
+{#                    })#}
+{#            }#}
+{#            else if (jsonData.event =="answer"){#}
+{#                console.log("处理回应，显示视频事件")#}
+{#                //事件是answer是的处理#}
+{#                Connection.setRemoteDescription(jsonData.data.sdp)#}
+{#            }#}
+{#        }#}
+{#    }#}
+{##}
+{##}
+{##}
+{#    </script>#}
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+a:link,a:visited{
+    color: #fae3d9;
+}
+
+a:hover{
+    color: #ffde7d;
+    font-size: large;
+}
+
+html ,body{
+    width: 100%;
+    height: 100%;
+}
+.header{
+    width: 100%;
+    height: 8%;
+    background-color: #112d4e;
+    display: flex;
+    position: fixed !important;
+    top: 0;
+    z-index: 100;
+    color: #2b2e4a;
+}
+
+.nav-box{
+    width: 5%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3f72af;
+    border-radius: 28px;
+    margin-left:5px ;
+}
+.nav{
+    width: 6%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*返回首页的标签位置*/
+.hover{
+    height: 80%;
+    cursor: pointer;
+}
+.hover:hover{
+    height: 100%;
+}
+.nav-search{
+    width: 30%;
+    position: absolute;
+    right: 30%;
+}
+.nav-login{
+    position: absolute;
+    right: 7%;
+}
+.nav-user{
+    position: absolute;
+    right: 8em;
+}
+.nav-logout,.nav-register{
+    position: absolute;
+    right: 1%;
+}
+.nav-search form{
+    padding-left: 10%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.nav-search form img{
+    height: 60%;
+}
+.nav-search form img:hover{
+    background:url("/static/img/icon/readySh.png");
+}
+
+.nav-search form input{
+    width: 80%;
+}
+.searchText
+{
+    outline: none;
+    background: #3f72af;
+    border: none;
+    border-bottom: 2px solid #62e262;
+}
+
+.not-in {
+    cursor: not-allowed;
+}

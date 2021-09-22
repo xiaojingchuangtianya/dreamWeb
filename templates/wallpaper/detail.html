@@ -1,0 +1,11 @@
+{% extends "model.html" %}
+{% load static %}
+{% block title %}
+    <title>详情页面</title>
+    <link rel="stylesheet" href="{% static 'css/wallpaper/detail.css' %}">
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <img class="img" src="/static/img/true/{{ url }}" alt="图片无法加载，请刷新重试！！" >
+    </div>
+{% endblock %}

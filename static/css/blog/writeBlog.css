@@ -1,0 +1,102 @@
+.main{
+    position: relative;
+    top: 8%;
+    height: 92%;
+    width: 100%;
+    background: #9be3d8;
+}
+.writeBlog{
+    display: flex;
+    justify-content: center;
+}
+.form_Header{
+    width: 100%;
+    font-size: large;
+    margin-bottom: 5px;
+    color: #e9f3db;
+}
+.titleInput{
+    padding-right: 130px;
+
+}
+.input-group{
+    display: initial;
+}
+input {
+    border-radius: 20px;
+    background: lightgray;
+    border-color: lightblue;
+    border-width: 4px;
+    border-style: outset;
+    outline: none;
+    width: 12rem;
+    height: 1.5rem;
+}
+input:focus{
+    transform: scale(1.2);
+    border-radius: 20px;
+    background: #FCFCD4;
+}
+
+.add{
+    width: 1.2rem;
+    height: 1.2rem;
+    top: 0.4rem;
+    padding-left: 5px;
+    /*background: red;*/
+    position: absolute;
+    /*border-left: #00492e 2px solid;*/
+    /*border-top: #00492e 2px solid;*/
+}
+
+.add:hover{
+    transform: scale(1.5);
+}
+
+#allHide{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    text-align: center;
+    /*background: #FCFCD4;*/
+}
+
+#alert{
+    width: 300px;
+    height: 200px;
+    background: #bce380;
+    z-index:100;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-150px,-100px);
+    border-radius: 15px;
+}
+#alert  p{
+    margin: 40px 0;
+}
+#alert input{
+    width: 6rem;
+}
+button{
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 15px;
+    outline: none;
+    background: #ecdc4f;
+}
+
+.submit{
+    text-align: center;
+}
+.submit button{
+    padding: 5px;
+    background:#daf767 ;
+}
+
+.submit button:hover{
+    padding: 9px;
+    background: #36ee3f;
+}

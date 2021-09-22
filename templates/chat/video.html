@@ -1,0 +1,20 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>视频通话空间</title>
+    <link rel="stylesheet" href="{% static 'css/videoCall/videoCall.css' %}">
+    <script src="{% static 'js/console.js' %}"></script>
+</head>
+<body>
+    <input id="roomName" type="application/json" hidden value ="{{ roomName }}">
+    <input id="userName" type="application/json" hidden value ="{{ userName }}">
+    <video id="self" autoplay controls="controls"></video>
+    <video id="other" autoplay></video>
+    <input id="chat-message-submit" type="button" value="开始通话" onclick="createOffer()">
+    <input type="button" value="前后置摄像头改变">
+<input type="button" value="关闭、开启摄像头">
+<input type="button" value="开启关闭声音">
+</body>
+	<script src="{%static 'js/videoCall/video.js'%}"></script>
+</html>

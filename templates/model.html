@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/model.css' %}">
+    <script defer="defer" src="{% static 'js/wallpaper/model.js' %}"></script>
+    <script src="{% static 'js/axios.min.js' %}"></script>
+    {% block title %}{% endblock %}
+</head>
+<body onload="getAllTypes()">
+    <nav class="header">
+        <div class="nav-box" style="background: none">
+            <img class="hover" src="{% static 'img/icon/logo.png' %}" alt="" onclick="location.href='/'"  >
+        </div>
+        <div class="nav-box">
+            <a href="javascript:void(0)" onclick="showLeft()">分类</a>
+        </div>
+        <div class="nav-box">
+            <a href="/wallpaper/hottestImg">最热</a>
+        </div>
+        <div class="nav-box">
+            <a href="/wallpaper/">随机</a>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="nav-box nav-register">
+                {{ request.user }}
+            </div>
+            <div class="nav-box nav-logout">
+              <a href="/auth/logout">退出</a>
+          </div>
+        {% else %}
+            <div class="nav-box login">
+                <a href="/auth/login/?redirectUrl={{ request.path }}">登录</a>
+            </div>
+            <div class="nav-box register">
+                <a href="/auth/register?redirectUrl={{ request.path }}">注册</a>
+            </div>
+        {% endif %}
+
+    </nav>
+    <div class="LeftNav" id="hideDom">
+        <div class="header">
+            <div class="text">图片分类</div>
+        </div>
+        <div class="leftMain" id="leftMain">
+            <li>暂无分类，请<a href="/wallpaper">刷新</a>重试！</li>
+        </div>
+        <div class="LeftHide" onclick="hideInside()">
+        </div>
+    </div>
+{#    <div>显示页数</div>#}
+{% block main %}
+{% endblock %}
+</body>
+</html>
+
+

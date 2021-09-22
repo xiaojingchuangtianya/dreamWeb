@@ -1,0 +1,18 @@
+{% extends "model.html" %}
+{% load static %}
+{% load imgHtml %}
+{% block title %}
+    <title>{{ imgType }}类壁纸</title>
+    <link rel="stylesheet" href="{% static 'css/wallpaper/typeImg.css' %}">
+    <script defer="defer" src="{% static 'js/wallpaper/typeImg.js' %}"></script>
+{% endblock %}
+{% block main %}
+<div class="main">
+
+    {% for size,url in manyImg %}
+        {{ url|imgHtml:size  }}
+        {% empty %}
+        <h3>暂无图片，请稍后再进行继续操作</h3>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+.main{
+    position: relative;
+    top: 8%;
+    min-height: 92%;
+    /*max-height: 1000%;*/
+    /*width: 100%;*/
+    background: #9be3d8;
+    text-align: center;
+    display: flex;
+}
+.leftNone{
+    width: 5%;
+    height: 100%;
+}
+.mainContent{
+    width: 70%;
+    /*height: 100%;*/
+    background: #c3c7e49c;
+}
+.rightComent{
+    width: 20%;
+    min-height: 50%;
+    position: fixed;
+    right: 5%;
+    background: #c6ead6;
+}
+
+.rightMes{
+    text-align: right;
+}
+p{
+    text-align: left;
+}

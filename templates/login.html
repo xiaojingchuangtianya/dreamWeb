@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+<div id="main">
+    <div class="loginPannel">
+        <div class="logo">
+            <img src="{% static 'img/icon/logo.png' %}" >
+        </div>
+        <div class="form">
+            <form action="/auth/login/?redirectUrl={{ redirect }}" method="post">
+                {% csrf_token %}
+                <div class="line name">
+                    <label >账号</label>
+                    <input type="text" placeholder="请输入你的账号！" name="name" required="required" minlength="4" maxlength="16">
+                </div>
+                <div class="line password">
+                    <label >密码</label>
+                    <input type="password" placeholder="请输入你的密码！" name="password" required="required" minlength="8" maxlength="32">
+                </div>
+                <div id="error">
+                    {{ error }}
+                </div>
+                <div class=" loginBottom">
+                    <button type="submit">登录</button>
+                </div>
+                <div class="addPanel">
+                    <div class="qqLogin lineBlock">
+                        <img src="" alt="">企鹅图标
+                    </div>
+                    <div class="register lineBlock">
+                        <a href="/auth/register/">去注册》</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

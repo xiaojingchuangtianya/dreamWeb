@@ -1,0 +1,153 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>视频通话空间</title>
+    <link rel="stylesheet" href="{% static 'css/videoCall/video.css' %}">
+	<script src{%static 'js/videoCall/video.js'%}>
+    <script src="{% static 'js/console.js' %}"></script>
+</head>
+<body>
+    <input id="roomName" type="application/json" hidden value ="{{ roomName }}">
+    <input id="userName" type="application/json" hidden value ="{{ userName }}">
+    <video id="self" autoplay controls="controls"></video>
+    <video id="other" autoplay></video>
+    <input id="chat-message-submit" type="button" value="开始通话" onclick="createOffer()">
+
+<script>
+    const roomName = document.getElementById("roomName").value;
+    const userid = document.getElementById("userName").value;
+    const chatSocket = new WebSocket('wss://' + window.location.host + '/ws/chat/' + roomName + '/');
+    var selfVideo=document.getElementById("self")
+    var otherVideo=document.getElementById("other")
+
+
+
+    function hasUserMedia() {
+        navigator.getUserMedia = navigator.getUserMedia || navigator.msGetUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        return !!navigator.getUserMedia;
+    }
+    function hasRTCPeerConnection() {
+        window.RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.msRTCPeerConnection;
+        return !!window.RTCPeerConnection;
+    }
+
+    var Connection;
+
+
+function startPeerConnection() {
+    //return;
+    var config = {
+        'iceServers': [
+            { 'url': 'stun:stun.l.google.com:19302' },
+            {
+                "urls":"turn:120.79.3.251:3478",
+                "username":'linjing',
+                "credential":"jing0421"
+            }
+        ]
+    };
+
+    Connection = new RTCPeerConnection(config);
+    Connection.onicecandidate = function(e) {
+        console.log('onicecandidate');
+        if (e.candidate) {
+            chatSocket.send(JSON.stringify({
+                "userid":userid,
+                "event": "_ice_candidate",
+                "data": {
+                    "candidate": e.candidate
+                }
+            }));
+        }
+    }
+    Connection.onaddstream = function(e) {
+        console.log('onaddstream');
+        otherVideo.srcObject = e.stream;
+    }
+}
+
+
+startPeerConnection();
+
+function f(isVideo,isAudio,isFront) {
+    navigator.getUserMedia({ video: isVideo||true, audio: isAudio||false },
+        stream => {
+            selfVideo.srcObject = stream;
+            selfVideo.play();
+            window.stream = stream;
+            Connection.addStream(stream)
+        },
+        err => {
+            console.log(err);
+        })
+}
+
+f(false,false)
+
+function createOffer(){
+    //发送offer和answer的函数，发送本地session描述
+    Connection.createOffer().then(offer => {
+        Connection.setLocalDescription(offer);
+        chatSocket.send(JSON.stringify({
+            "userid":userid,
+            "event": "offer",
+            "data": {
+                "sdp": offer
+            }
+        }));
+    });
+}
+eventBind()
+
+
+function eventBind() {
+    //连接成功
+    chatSocket.onopen = function(e) {
+        console.log('连接成功')
+    };
+    //server端请求关闭
+    chatSocket.onclose = function(e) {
+        console.log('close')
+    };
+    //error
+    chatSocket.onerror = function(e) {
+
+    };
+    //收到消息
+    chatSocket.onmessage = function (event) {
+            var jsonData = JSON.parse(JSON.parse(event.data));
+            if(jsonData.userid != userid){
+                console.log("这不是发起者，而是"+userid)
+                //如果是一个ICE的候选，则将其加入到PeerConnection中，否则设定对方的session描述为传递过来的描述
+                if(jsonData.event === "_ice_candidate"&&jsonData.data.candidate) {
+                    console.log("后续匹配")
+                    Connection.addIceCandidate(new RTCIceCandidate(jsonData.data.candidate));
+                }
+                else if(jsonData.event == 'offer'){
+                    console.log("发送offer"+jsonData.data.sdp)
+                    Connection.setRemoteDescription(jsonData.data.sdp);
+                    Connection.createAnswer().then(answer => {
+                        Connection.setLocalDescription(answer);
+                        console.log(window.stream)
+                        chatSocket.send(JSON.stringify({
+                            "userid":userid,
+                            "event": "answer",
+                            "data": {
+                                "sdp": answer
+                            }
+                        }));
+                    })
+                }
+                else if(jsonData.event == 'answer'){
+                    Connection.setRemoteDescription(jsonData.data.sdp);
+                    console.log(window.stream)
+                }
+            }
+        }
+}
+
+</script>
+
+</body>
+</html>

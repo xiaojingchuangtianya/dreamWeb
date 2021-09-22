@@ -1,0 +1,35 @@
+{% extends "blogModel.html" %}
+{% load static %}
+
+{% block title %}
+    <title>博客主页</title>
+    <link rel="stylesheet" href="{% static 'css/blog/blogHome.css'%}">
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <div class="message">
+            <div class="leftLess">
+                <h4 class="leftHeader">最近浏览较多</h4>
+                <div class="leftBody">
+                  {% for item in tenHotBlog %}
+                        <li><a href="/blog/blogDetail/{{ item.id }}">{{ item.title }}</a></li>
+                    {% empty %}
+                      {% if user.is_authenticated %}
+                        <p>暂无更多博客，前往<a href="/blog/writeBlog">写博客</a></p>
+                      {% else %}
+                          <p>暂无博客，请先<a href="/auth/login/?redirectUrl={{ request.path }}">登录</a>以便分享更多知识</p>
+                      {% endif %}
+                    {% endfor %}
+                </div>
+{#                左侧较少数据#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+    window.onload = function () {
+        document.getElementsByClassName("blog_index")[0].innerHTML="博客"
+    }
+</script>
+{% endblock %}

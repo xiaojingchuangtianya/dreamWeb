@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>《《导航页》》</title>
+    <link rel="stylesheet" href="{% static 'css/home/index.css' %}">
+</head>
+<body>
+<!--flex布局，将页面内三个效果展示-->
+    <div class="navbar">
+        {% if user.is_authenticated %}
+            <div class="nav-box nav-user">
+                {{ request.user }}
+            </div>
+            <div class="nav-box nav-logout">
+                <a href="/auth/logout">退出</a>
+            </div>
+        {% else %}
+            <div class="nav-box nav-login">
+                <a href="/auth/login/?redirectUrl={{ request.path }}">登录</a>
+            </div>
+            <div class="nav-box nav-register">
+                <a href="/auth/register?redirectUrl={{ request.path }}">注册</a>
+            </div>
+        {% endif %}
+    </div>
+<div id="main">
+    <div class="frameSize frame picture">
+        <div class="inner">
+            <a href="/wallpaper">
+                <img src="{% static 'img/icon/图片.png' %}" >
+            </a>
+        </div>
+        <br>
+          <div class="character">
+              <a href="/wallpaper">壁纸中心</a>
+          </div>
+    </div>
+    {% if request.user.is_authenticated %}
+        <div class=" frameSize frame video">
+    <div class="inner" >
+        <a href="/video">
+            <img src="{% static 'img/icon/视频通话.png' %}" >
+        </a>
+    </div>
+    <br>
+    <div class="character">
+        <a href="/video">在线视频</a>
+    </div>
+</div>
+    {% else %}
+        <div class=" frameSize not-in video" onclick="alert('未登录无法进入，请前往登录注册！')">
+        <div class="inner">
+            <a href="javascript:void(0)" class="not-in" title="需要登录后才可以进入">
+                <img src="{% static 'img/icon/视频通话.png' %}" >
+            </a>
+        </div>
+        <br>
+        <div class="character ">
+            <a href="javascript:void(0)">在线视频</a>
+        </div>
+</div>
+    {% endif %}
+    <div class="frameSize frame blog">
+        <div class="inner">
+            <a href="/blog">
+                <img src="{% static 'img/icon/记事本.png' %}" >
+            </a>
+        </div>
+        <br>
+        <div class="character">
+            <a href="/blog">博客</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

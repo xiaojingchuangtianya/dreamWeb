@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/blogModel.css' %}">
+    {% block title %}
+    {% endblock %}
+</head>
+<body>
+<nav class="header">
+    <div class="nav index">
+        <img class="hover" src="{% static 'img/icon/logo.png' %}" alt="" onclick="location.href='/'"  >
+    </div>
+    <div class="nav-box blog_index">
+        <a href="/blog">博客</a>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div class="nav-box create">
+        <a href="/blog/writeBlog">创作</a>
+    </div>
+        {% else %}
+    <div class="nav-box not-in">
+        <span class="not-in">创作</span>
+    </div>
+    {% endif %}
+
+    <div class="nav-box nav-search">
+        <form action="/blog/search">
+            <input type="text" class="searchText">
+            <img class="searchImg" id='searchImg' src="{% static 'img/icon/search.png' %}" >
+        </form>
+
+    </div>
+  {% if user.is_authenticated %}
+            <div class="nav-box nav-user">
+                {{ request.user }}
+            </div>
+          <div class="nav-box nav-logout">
+              <a href="/auth/logout">退出</a>
+          </div>
+        {% else %}
+            <div class="nav-box nav-login">
+                <a href="/auth/login/?redirectUrl={{ request.path }}">登录</a>
+            </div>
+            <div class="nav-box nav-register">
+                <a href="/auth/register?redirectUrl={{ request.path }}">注册</a>
+            </div>
+    {% endif %}
+</nav>
+{% block main %}
+{% endblock %}
+</body>
+{% block script %}
+{% endblock %}
+</html>
+
+
+
+{#<body contenteditable="true" class="cke_editable cke_editable_themed cke_contents_ltr cke_show_borders" spellcheck="false"><p><br></p></body>#}

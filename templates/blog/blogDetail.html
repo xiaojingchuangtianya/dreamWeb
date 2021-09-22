@@ -1,0 +1,32 @@
+{% extends "blogModel.html" %}
+{% load static %}
+
+{% block title %}
+    <title>{{ blog.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/blog/blogDetail.css'%}">
+    <link rel="stylesheet" href="{% static 'css/prism.min.css' %}">
+    <script src="{% static 'js/prism.min.js' %}"></script>
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <div class="leftNone">
+        </div>
+        <div class="mainContent">
+            <h2>{{ blog.title }}</h2>
+            <div>{{ blog.content |safe }}</div>
+            <p class="rightMes">作者： {{ blog.author }}</p>
+	    <p class="rightMes">分类：{{blog.type}}</p> 
+            <p class="rightMes">创作时间:{{ blog.createTime }}</p>
+        </div>
+        <div class="rightComent">
+            <div>
+                <h2>博客相关推荐</h2>
+            </div>
+            这里会做一些相关博客的推荐，方便跳转！
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+</script>
+{% endblock %}
