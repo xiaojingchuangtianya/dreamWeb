@@ -63,7 +63,7 @@ def createType(request):
     print(returnData)
     return JsonResponse(returnData)
 
-
+#在进入博客详情时，同时需要去获取对应的评论内容，返回进行展示
 def blogDetail(request,blogId):
       # 保存cookie10个小时
     try:
