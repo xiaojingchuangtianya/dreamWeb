@@ -5,5 +5,6 @@ urlpatterns=[
     path("",views.blogHome),
     path("writeBlog/",views.writeBlog),#处理写博客
     path("createType",views.createType),
-    re_path(r"blogDetail/(?P<blogId>\d+)/",views.blogDetail)
+    re_path(r"blogDetail/(?P<blogId>\d+)/",views.blogDetail),
+    path("createComment",views.createComent)
 ]

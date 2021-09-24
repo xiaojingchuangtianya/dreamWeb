@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/blog/blogDetail.css'%}">
     <link rel="stylesheet" href="{% static 'css/prism.min.css' %}">
     <script src="{% static 'js/prism.min.js' %}"></script>
+    <script src="{%static 'js/axios.min.js'%}"></script>
 {% endblock %}
 {% block main %}
     <div class="main">
@@ -19,12 +20,9 @@
         </div>
         <div class="writeComment">
             <!-- 这里用ajax会比较好一些，不要进行重定向操作 -->
-            <form action="/blog/createComment/" method="post">
-                {% csrf_token %}
-                <input type="text">
-                <button type="submit">发表</button>
-            </form>
-            
+                <input type="text" id="comment">
+                <input type="hidden" name="blog" id="blogid" value="{{blog.id}}">
+                <button type="button" onclick="sendComent()">发表</button>
         </div>
         <div class="rightPannel">
             <div class="rightSuggest">
@@ -46,6 +44,32 @@
     </div>
 {% endblock %}
 {% block script %}
-    <script>
+<script>
+function sendComent(){
+    commentDoc=document.getElementById("comment")
+    blogid=document.getElementById("blogid")
+    if(commentDoc.value == ""){
+        axios({
+        method: 'post',
+        url: '/blog/createComment',
+        data:{
+        "blog":blogid.value,
+        "Comment":commentDoc.value
+        }
+    })
+    .then(res=>{
+        // 成功了就清空输入框内容
+        console.log(res)
+        if (res.status ==200){
+
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+        alert("错误信息")
+    })
+    }
+    
+} 
 </script>
 {% endblock %}

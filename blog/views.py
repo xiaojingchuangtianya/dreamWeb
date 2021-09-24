@@ -1,10 +1,14 @@
 import json
+import re
 from blog.models import BlogType,Blog,Hot
 from django.shortcuts import render,redirect
 from django.http.response import HttpResponse,JsonResponse
 from django.contrib.auth.decorators import login_required
 from blog.myFont import MyForms
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt 
+
+
 
 # Create your views here.
 def blogHome(request):
@@ -79,3 +83,11 @@ def blogDetail(request,blogId):
         print(e)
         return render(request, "dealPage/404.html")
     return detResponse
+
+#必须用户已经登录才可以处理
+#处理接口，如果新增博客的详情内容，返回1为正确新增，其他为错误
+@login_required
+@csrf_exempt
+def createComent(request):
+    print(request.body)
+    return JsonResponse({1:"1"})
