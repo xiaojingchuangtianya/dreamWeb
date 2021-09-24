@@ -9,20 +9,39 @@
 {% endblock %}
 {% block main %}
     <div class="main">
-        <div class="leftNone">
-        </div>
+        <div class="hide"></div>
         <div class="mainContent">
             <h2>{{ blog.title }}</h2>
             <div>{{ blog.content |safe }}</div>
             <p class="rightMes">作者： {{ blog.author }}</p>
-	    <p class="rightMes">分类：{{blog.type}}</p> 
-            <p class="rightMes">创作时间:{{ blog.createTime }}</p>
+	        <p class="rightMes">分类：{{blog.type}}</p> 
+            <p class="rightMes">创作时间:{{ blog.createTime |date:"Y-m-d H:i:s"}}</p>
         </div>
-        <div class="rightComent">
-            <div>
-                <h2>博客相关推荐</h2>
+        <div class="writeComment">
+            <!-- 这里用ajax会比较好一些，不要进行重定向操作 -->
+            <form action="/blog/createComment/" method="post">
+                {% csrf_token %}
+                <input type="text">
+                <button type="submit">发表</button>
+            </form>
+            
+        </div>
+        <div class="rightPannel">
+            <div class="rightSuggest">
+                <div class="panel">
+                    右边推荐栏目
+                </div>
+
             </div>
-            这里会做一些相关博客的推荐，方便跳转！
+            <br>
+            <div class="rightComment">
+                <div class="panel">
+                    评论
+                </div>
+                {%for com in comments%}
+                <p>{{com.userName}}:{{com.content}} {{com.writeTime}}</p>
+                {%endfor%}
+            </div>
         </div>
     </div>
 {% endblock %}
