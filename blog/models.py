@@ -36,3 +36,6 @@ class Comment(models.Model):
     userName=models.CharField(max_length=80,verbose_name="用户")#不使用外键，只用一个字符串记录玩家
     writeTime=models.DateTimeField(auto_created=True)
     content=models.TextField(max_length=500,verbose_name="评论内容")
+    
+    def __str__(self):
+        return self.blogF

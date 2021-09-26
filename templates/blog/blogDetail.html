@@ -37,7 +37,7 @@
                     评论
                 </div>
                 {%for com in comments%}
-                <p>{{com.userName}}:{{com.content}} {{com.writeTime}}</p>
+                <p>{{com.userName}}:{{com.content}}</p>
                 {%endfor%}
             </div>
         </div>
@@ -46,22 +46,22 @@
 {% block script %}
 <script>
 function sendComent(){
-    commentDoc=document.getElementById("comment")
+    commentValue=document.getElementById("comment").value.trim();
     blogid=document.getElementById("blogid")
-    if(commentDoc.value == ""){
+    if(commentValue != ""){
         axios({
         method: 'post',
         url: '/blog/createComment',
         data:{
         "blog":blogid.value,
-        "Comment":commentDoc.value
+        "Comment":commentValue
         }
     })
     .then(res=>{
         // 成功了就清空输入框内容
         console.log(res)
         if (res.status ==200){
-
+            showComment(res.data.user,commentValue)
         }
     })
     .catch(error=>{
@@ -71,5 +71,16 @@ function sendComent(){
     }
     
 } 
+
+function showComment(user,value){
+    commentArea=document.getElementsByClassName("rightComment")[0]
+    inputArea=document.getElementById("comment")
+    addDom=document.createElement("div");
+    addDom.className="addComment";
+    addDom.textContent=user+":"+value;
+    commentArea.appendChild(addDom)
+    inputArea.value=""
+}
+
 </script>
 {% endblock %}

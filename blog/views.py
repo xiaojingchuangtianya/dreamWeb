@@ -1,6 +1,6 @@
 import json
 import re
-from blog.models import BlogType,Blog,Hot
+from blog.models import BlogType,Blog,Hot,Comment
 from django.shortcuts import render,redirect
 from django.http.response import HttpResponse,JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -55,8 +55,6 @@ def writeBlog(request):
             return HttpResponse("error")
 
 
-
-
 def createType(request):
     typeName = json.loads(request.body.decode("utf-8"))["addType"]
     try:
@@ -73,7 +71,8 @@ def blogDetail(request,blogId):
     try:
         blogDet = Blog.objects.get(id=blogId)
         isReadBlog = request.COOKIES.get("isReadBlog{}".format(blogDet.id))
-        detResponse = render(request, "blog/blogDetail.html", context={"blog": blogDet})
+        comments=Comment.objects.filter(blogF=blogDet)
+        detResponse = render(request, "blog/blogDetail.html", context={"blog": blogDet,"comments":comments})
         if not isReadBlog:  # 如果没有找到该cookie,给他新增cookie
             detResponse.set_cookie("isReadBlog{}".format(blogDet.id), 1, expires=60*60*5)
             hotDetail =Hot.objects.get(pk=blogDet.hot_id)
@@ -89,5 +88,9 @@ def blogDetail(request,blogId):
 @login_required
 @csrf_exempt
 def createComent(request):
-    print(request.body)
-    return JsonResponse({1:"1"})
+    dataDict=eval(str(request.body,encoding="utf-8"))
+    print(request.user)
+    print(dataDict)
+    blogf=Blog.objects.get(id=dataDict["blog"])
+    commnet=Comment.objects.create(blogF=blogf,userName=str(request.user),writeTime=now(),content=dataDict["Comment"])
+    return JsonResponse({"user":str(request.user)})
