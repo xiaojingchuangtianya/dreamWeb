@@ -20,9 +20,9 @@
         </div>
         <div class="writeComment">
             <!-- 这里用ajax会比较好一些，不要进行重定向操作 -->
-                <input type="text" id="comment">
+                <textarea type="" id="comment" placeholder="写下你对这篇博客的一些见解呗！"></textarea>
                 <input type="hidden" name="blog" id="blogid" value="{{blog.id}}">
-                <button type="button" onclick="sendComent()">发表</button>
+                <button type="button" onclick="sendComent()" id="sendComent">发表</button>
         </div>
         <div class="rightPannel">
             <div class="rightSuggest">

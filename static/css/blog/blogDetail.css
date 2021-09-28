@@ -39,3 +39,17 @@
     text-align: center;
     background-color:rgb(124, 129, 116);
 }
+div.rightComment>p{
+    border-bottom: #c1c1a8 2px solid;
+}
+#comment{
+    float: left;
+    margin-left: 3%;
+    margin-top: 0.6rem;
+    width: 80%;
+    height: 75%;
+}
+#sendComent{
+    float: left;
+    margin: 2rem  0 0 2rem;
+}

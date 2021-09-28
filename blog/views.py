@@ -25,7 +25,8 @@ def blogHome(request):
 def writeBlog(request):
     if request.method =="GET":
         myForm=MyForms()
-        return render(request,"blog/writeBlog.html",context={"myForm":myForm})
+        blogs=Blog.objects.all()
+        return render(request,"blog/writeBlog.html",context={"myForm":myForm,"blogs":blogs})
     elif request.method == "POST":
         postData=request.POST
         getBlogType=BlogType.objects.filter(id=postData["type"])

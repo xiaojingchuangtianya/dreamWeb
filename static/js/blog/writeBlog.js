@@ -1,23 +1,25 @@
 
-//主动修改alert样式
-window.alert =function (text){
+//主动修改alert样式  (将alert修改为单个处理方法)
+function showAlert(text){
+    allHide=document.createElement("div");
+    allHide.id="allHide";
     if (text){
-        divInnerHtml=" <div id='allHide'><div id='alert'>" +
-            "<p>"+text+"</p>" +
-            "<button class='cancelButton' type='button' onclick='cleanAlert()'>关闭</button> " +
-            "</div></div>";
+        allHide.innerHTML="<div id='alert'>"+
+        "<p>"+text+"</p>"+
+        "<button class='cancelButton' type='button' onclick='cleanAlert()'>关闭</button>"+
+        "</div>";
+        
     }
     else{
-        var divInnerHtml ="<div id='allHide'>" +
+        allHide.innerHTML=
             "<div id='alert'> " +
             "<p>类名：<label for='typeAdd'>" +
             "<input type='text' name='addType' id='addType' autocomplete='off' minlength='1'  maxlength='8'></label></p> <div> " +
             "<button class='addButton' type='button' onclick='addBlogType()'>新增</button> " +
             "<button class='cancelButton' type='button' onclick='cleanAlert()'>取消</button> " +
-            "</div></div></div>";
+            "</div></div>";
     }
-
-    document.body.innerHTML+=divInnerHtml;
+    document.body.appendChild(allHide);
     document.body.style.overflow="hidden";
 };
 
@@ -69,15 +71,22 @@ function addBlogType() {
     }
     else{
         document.getElementById("allHide").remove();
-        alert("你的类名长度不符合规范");
+        showAlert("你的类名长度不符合规范");
     }
 //   此处进行ajax请求新增添加到，按照返回结果处理 0已存在 1新增成功
 //    无论如何都将弹窗关闭，1时新增select选项 其他情况不做处理
+
 }
 
 //关闭，新增成功后或者直接退出收起弹窗
 function cleanAlert() {
-    document.getElementById("allHide").remove()
+    document.getElementById("allHide").remove();
+    
+    document.getElementsByClassName("cke_wysiwyg_frame")[0].innerHTML=OIframe;
 }
 
+OIframe=""
 
+function getDom(){
+    OIframe=document.getElementsByClassName('cke_wysiwyg_frame')[0].contentDocument;
+}

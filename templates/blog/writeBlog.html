@@ -9,6 +9,9 @@
 {% endblock %}
 {% block main %}
 <div class="main">
+    <div class="myBlog">
+        {{blogs}}
+    </div>
     <div class="writeBlog">
         {#    这里写一个font表单用于#}
         <form action="/blog/writeBlog/" method="post" enctype="multipart/form-data">
@@ -20,7 +23,7 @@
                 <div  class="input-group typeInput">
                     <span>分类：</span>{{ myForm.type }}
                     <div class="input-group add">
-                        <img onclick=alert(); src="{% static 'img/icon/add.png' %}" alt="新增" width="100%">
+                        <img onclick="getDom();showAlert();" src="{% static 'img/icon/add.png' %}" alt="新增" width="100%" >
                     </div>
                 </div>
             </div>
@@ -37,3 +40,8 @@
     }
 </script>
 {% endblock %}
+
+
+
+
+
