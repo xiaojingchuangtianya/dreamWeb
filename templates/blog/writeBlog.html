@@ -10,7 +10,15 @@
 {% block main %}
 <div class="main">
     <div class="myBlog">
-        {{blogs}}
+        <div class="panel">
+            你的博客
+        </div>
+        {%for blog in blogs%}
+            <p class="line">{{blog}}</p>
+            {%empty%}
+            暂没有任何博客
+        {%endfor%}
+        <!-- {{blogs}} -->
     </div>
     <div class="writeBlog">
         {#    这里写一个font表单用于#}
@@ -23,7 +31,7 @@
                 <div  class="input-group typeInput">
                     <span>分类：</span>{{ myForm.type }}
                     <div class="input-group add">
-                        <img onclick="getDom();showAlert();" src="{% static 'img/icon/add.png' %}" alt="新增" width="100%" >
+                        <img onclick="showAlert();" src="{% static 'img/icon/add.png' %}" alt="新增" width="100%" >
                     </div>
                 </div>
             </div>

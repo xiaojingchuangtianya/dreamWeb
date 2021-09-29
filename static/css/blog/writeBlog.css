@@ -6,8 +6,11 @@
     background: #9be3d8;
 }
 .writeBlog{
-    display: flex;
-    justify-content: center;
+    display: block;
+    width: 80%;
+    height: 100%;
+    float: right;
+    text-align: center;
 }
 .form_Header{
     width: 100%;
@@ -99,4 +102,20 @@ button{
 .submit button:hover{
     padding: 9px;
     background: #36ee3f;
+}
+.myBlog{
+    position:absolute;
+    width: 18%;
+    text-align: center;
+    margin-left: 1%;
+
+}
+.panel{
+    text-align: center;
+    background-color: azure;
+    font-size: x-large;
+    font-weight: 500;
+}
+.line{
+    border-bottom: rgba(175, 236, 228, 0.548) 2px solid;
 }

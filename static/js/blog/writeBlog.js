@@ -81,12 +81,11 @@ function addBlogType() {
 //关闭，新增成功后或者直接退出收起弹窗
 function cleanAlert() {
     document.getElementById("allHide").remove();
-    
-    document.getElementsByClassName("cke_wysiwyg_frame")[0].innerHTML=OIframe;
+    // document.getElementsByClassName("cke_wysiwyg_frame")[0].innerHTML=OIframe;
 }
 
-OIframe=""
+// OIframe=""
 
-function getDom(){
-    OIframe=document.getElementsByClassName('cke_wysiwyg_frame')[0].contentDocument;
-}
+// function getDom(){
+//     OIframe=document.getElementsByClassName('cke_wysiwyg_frame')[0].contentDocument;
+// }
