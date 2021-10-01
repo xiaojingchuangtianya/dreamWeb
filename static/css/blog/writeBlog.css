@@ -3,7 +3,8 @@
     top: 8%;
     height: 92%;
     width: 100%;
-    background: #9be3d8;
+    background: #bfe1dc;
+    overflow: hidden;
 }
 .writeBlog{
     display: block;
@@ -17,6 +18,9 @@
     font-size: large;
     margin-bottom: 5px;
     color: #e9f3db;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .titleInput{
     padding-right: 130px;
@@ -96,11 +100,11 @@ button{
 }
 .submit button{
     padding: 5px;
-    background:#daf767 ;
+    background:#80efc6db ;
 }
 
 .submit button:hover{
-    padding: 9px;
+    padding: 5px 9px 5px 9px;
     background: #36ee3f;
 }
 .myBlog{
