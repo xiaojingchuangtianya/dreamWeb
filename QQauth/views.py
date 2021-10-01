@@ -32,8 +32,8 @@ def registerView(request):
 def loginView(request):
     
     if request.method =="GET":
-        redirectUrl = request.GET.get("redirectUrl", "/")
-        print(request.GET.get("redirectUrl",None))#一个跳转的url
+        redirectUrl = request.GET.get("redirectUrl", None) or request.GET.get("next","")
+        print("用户登录重定向"+request.GET.get("redirectUrl", None) or request.GET.get("next",""))#一个跳转的url
         return render(request,"login.html",context={"redirect":redirectUrl})
     elif request.method =="POST":
         redirectUrl = request.GET.get("redirectUrl", "/")

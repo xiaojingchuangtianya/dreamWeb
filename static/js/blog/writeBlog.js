@@ -75,17 +75,33 @@ function addBlogType() {
     }
 //   此处进行ajax请求新增添加到，按照返回结果处理 0已存在 1新增成功
 //    无论如何都将弹窗关闭，1时新增select选项 其他情况不做处理
-
 }
 
 //关闭，新增成功后或者直接退出收起弹窗
 function cleanAlert() {
     document.getElementById("allHide").remove();
-    // document.getElementsByClassName("cke_wysiwyg_frame")[0].innerHTML=OIframe;
 }
 
-// OIframe=""
+function getBlog(id){
+    const request=new Request(
+        "/blog/getBlog/"+id,
+        {"headers":{
+            'content-type': 'application/json',
+        }}
+    );
+    fetch(request,{
+        method:"GET",
+        mode:"same-origin"
+    }).then(res=>{
+        return res.json()
+        })
+        .then(data=>{
+            document.getElementsByClassName("cke_wysiwyg_frame")[0].contentDocument.getElementsByClassName("cke_contents_ltr")[0].innerHTML=data.content;
+            document.getElementById("id_title").value=data.title
+            document.getElementById("id_type").value=data.typeId
+            //这里有问题
+            console.log(data.content)
+            })
+    .catch(error=>{console.log(error)})
+}
 
-// function getDom(){
-//     OIframe=document.getElementsByClassName('cke_wysiwyg_frame')[0].contentDocument;
-// }

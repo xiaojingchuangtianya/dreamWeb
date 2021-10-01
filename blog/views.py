@@ -38,22 +38,38 @@ def writeBlog(request):
             addType=getBlogType[0]
         else:
             addType=BlogType.objects.create(typeName=postData["type"])
+
         newHot =Hot.objects.create()
 
         print(postData["title"],newHot,addType,postData["content"],request.user)
         try:
-            blog =Blog.objects.create(
-                title=postData["title"],
-                hot=newHot,
-                type=addType,#需要检测是否存在，不存在则新建
+            saveBlog=Blog.objects.filter(title=postData["title"])
+            if saveBlog:
+                blog =saveBlog.update(
                 content=postData["content"],
                 createTime= now(),
                 author =request.user
             )
+            else:
+                blog =Blog.objects.create(
+                    title=postData["title"],
+                    hot=newHot,
+                    type=addType,#需要检测是否存在，不存在则新建
+                    content=postData["content"],
+                    createTime= now(),
+                    author =request.user
+                )
             return redirect("/blog")
         except Exception as e:
             print(e)
             return HttpResponse("error")
+
+#保存博客内容或者获取博客的内容
+@login_required
+def blogSave(request,id):
+    if request.method=="GET":
+        blog=Blog.objects.get(pk=id)
+        return JsonResponse({"content":blog.content,"title":blog.title,"typeId":blog.type.id})
 
 
 def createType(request):
