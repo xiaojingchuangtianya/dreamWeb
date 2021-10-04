@@ -29,16 +29,22 @@
                 <div class="panel">
                     右边推荐栏目
                 </div>
-
+                <div class="recommends">
+                    {%for item in recommends%}
+                    <li> <a href="/blog/blogDetail/{{item.id}}">{{item}}</a></li>
+                    {%endfor%}
+                </div>
             </div>
-            <br>
             <div class="rightComment">
                 <div class="panel">
                     评论
                 </div>
-                {%for com in comments%}
-                <p>{{com.userName}}:{{com.content}}</p>
-                {%endfor%}
+                <div class="comments">
+                    {%for com in comments%}
+                    <p>{{com.userName}}:{{com.content}}</p>
+                    {%endfor%}
+                </div>
+
             </div>
         </div>
     </div>
@@ -73,10 +79,10 @@ function sendComent(){
 } 
 
 function showComment(user,value){
-    commentArea=document.getElementsByClassName("rightComment")[0]
+    commentArea=document.getElementsByClassName("comments")[0]
     inputArea=document.getElementById("comment")
-    addDom=document.createElement("div");
-    addDom.className="addComment";
+    addDom=document.createElement("p");
+    // addDom.className="addComment";
     addDom.textContent=user+":"+value;
     commentArea.appendChild(addDom)
     inputArea.value=""

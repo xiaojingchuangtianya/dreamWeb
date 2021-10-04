@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from blog.myFont import MyForms
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt 
+from random import sample,randint
 
 
 # Create your views here.
@@ -99,7 +100,10 @@ def blogDetail(request,blogId):
         blogDet = Blog.objects.get(id=blogId)
         isReadBlog = request.COOKIES.get("isReadBlog{}".format(blogDet.id))
         comments=Comment.objects.filter(blogF=blogDet)
-        detResponse = render(request, "blog/blogDetail.html", context={"blog": blogDet,"comments":comments})
+        allBlog=Blog.objects
+        randNum=sample(range(1,allBlog.all().count()),randint(2,5))
+        recommends=allBlog.filter(id__in=randNum)
+        detResponse = render(request, "blog/blogDetail.html", context={"blog": blogDet,"comments":comments,"recommends":recommends})
         if not isReadBlog:  # 如果没有找到该cookie,给他新增cookie
             detResponse.set_cookie("isReadBlog{}".format(blogDet.id), 1, expires=60*60*5)
             hotDetail =Hot.objects.get(pk=blogDet.hot_id)
