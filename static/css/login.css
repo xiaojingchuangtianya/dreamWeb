@@ -33,9 +33,10 @@ a{
         font-size: 20px;
         margin-bottom: 20px;
     }
-.line,.addPanel{
-    margin-top: 10px;
-}
+/* .line,.addPanel{
+    display: flex;
+    justify-content: space-around;
+} */
 .line label {
     width: 15%;
     float: left;
@@ -58,13 +59,27 @@ input::-webkit-input-placeholder{
 .loginBottom button:hover{
     background: #17aa59;
 }
+button#register{
+    height: 100%;
+    padding: 0 20px;
+    background: #4dc7b0;
+    border: none;
+    border-radius: 20px;
+}
 
-@media screen and (min-device-width: 700px){
+.addPanel{
+    height: 10%;
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-around;
+
+}
+@media screen and (min-device-width: 1000px){
     #main .loginPannel{
         position: absolute;
         top:10%;
         right: 5%;
-        width: 20%;
+        width: 30%;
         height: 60%;
         background: #0f74a8;
     }
@@ -87,7 +102,7 @@ input::-webkit-input-placeholder{
 }
 
 
-@media screen and (max-device-width: 700px){
+@media screen and (max-device-width: 1000px){
     #main .loginPannel{
         left: 10%;
         position: absolute;
