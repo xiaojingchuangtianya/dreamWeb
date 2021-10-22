@@ -21,16 +21,24 @@ div.message{
     width: 35%;
     height: 80%;
 }
-.message .leftLess .leftHeader{
+.message .rightLess{
+    width: 65%;
+}
+.Header{
     padding: 10px 0;
+}
+.leftHeader{
     background: #6991b1;
 }
+.rightHeader{
+    background: darkseagreen;
+}
 .message .leftLess .leftBody{
-    text-align: left;
     padding-left: 5px;
 
 }
-.message .leftLess .leftBody li{
+ li{
+     text-align: left;
     padding:5px 10px 5px ;
     border-bottom: 1px solid goldenrod;
     list-style-type: simp-chinese-informal ;
@@ -49,5 +57,4 @@ div.message{
 }
 .message .rightMes{
     background: #62CBDB;
-    height: 50%;
 }

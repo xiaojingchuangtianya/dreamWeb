@@ -14,7 +14,9 @@
             你的博客
         </div>
         {%for blog in blogs%}
-            <p class="line">{{blog}}</p>
+            <p class="line">
+                <a href="javascript:void(0)" onclick="getBlog({{blog.id}})">{{blog}}</a>
+            </p>
             {%empty%}
             暂没有任何博客
         {%endfor%}
@@ -34,9 +36,10 @@
                         <img onclick="showAlert();" src="{% static 'img/icon/add.png' %}" alt="新增" width="100%" >
                     </div>
                 </div>
+                <div class="submit"><button type="submit">提交</button></div>
             </div>
             {{ myForm.content }}
-            <div class="submit"><button type="submit">提交</button></div>
+            
         </form>
     </div>
 </div>

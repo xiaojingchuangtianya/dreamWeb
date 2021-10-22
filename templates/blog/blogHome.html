@@ -9,7 +9,7 @@
     <div class="main">
         <div class="message">
             <div class="leftLess">
-                <h4 class="leftHeader">最近浏览较多</h4>
+                <h4 class="Header leftHeader">最近浏览较多</h4>
                 <div class="leftBody">
                   {% for item in tenHotBlog %}
                         <li><a href="/blog/blogDetail/{{ item.id }}">{{ item.title }}</a></li>
@@ -21,7 +21,22 @@
                       {% endif %}
                     {% endfor %}
                 </div>
-{#                左侧较少数据#}
+            </div>
+            <div class="rightLess">
+                <div class="rightMes">
+                    <h4 class="Header rightHeader">最新博客提交修改记录</h4>
+                    <div class="rightBody">
+                        {% for item in tenNewMes %}
+                        <li>{{item |safe}}</li>
+                    {% empty %}
+                      {% if user.is_authenticated %}
+                        <p>暂无最新修改发布内容，前往<a href="/blog/writeBlog">写博客</a></p>
+                      {% else %}
+                          <p>暂无最新修改发布内容，请先<a href="/auth/login/?redirectUrl={{ request.path }}">登录</a>以便分享更多知识</p>
+                      {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>     
             </div>
         </div>
     </div>

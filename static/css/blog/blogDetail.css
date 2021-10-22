@@ -1,3 +1,4 @@
+
 .main{
     width: 100%;
     height: 100%;
@@ -32,15 +33,35 @@
     width: 20%;
     position: absolute;
     right: 5%;
-    background-color: darkgrey;
     height: 60%;
 }
 .panel{
     text-align: center;
-    background-color:rgb(124, 129, 116);
+    background-color:rgb(217 253 158);
 }
-div.rightComment>p{
+.recommends{
+    padding: 10px 0;
+    background: #6c97a7;
+}
+.recommends li{
+    list-style: none;
+    text-align: center;
+}
+
+
+div.rightComment>div>p{
+    background: beige;
     border-bottom: #c1c1a8 2px solid;
+}
+div.rightComment,div.comments{
+    height: 100%;
+    width: 100%;
+}
+
+div.comments{
+    background: beige;
+    padding: 10px 0;
+    overflow: auto;
 }
 #comment{
     float: left;

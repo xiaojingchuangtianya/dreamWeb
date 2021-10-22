@@ -31,8 +31,8 @@ def registerView(request):
 #登陆界面可以选择跳转到具体的页面，这个页面记住redirectUrl，然后如果到微信或者qq登陆时也会传过去，最终登陆成功自动跳转
 def loginView(request):
     if request.method =="GET":
-        redirectUrl = request.GET.get("redirectUrl", "/")
-        print(request.GET.get("redirectUrl",None))#一个跳转的url
+        redirectUrl = request.GET.get("redirectUrl",None ) or request.GET.get("next","")
+        # print("用户登录重定向"+request.GET.get("redirectUrl", None) or request.GET.get("next",""))#一个跳转的url
         return render(request,"login.html",context={"redirect":redirectUrl})
     elif request.method =="POST":
         redirectUrl = request.GET.get("redirectUrl", "/")
