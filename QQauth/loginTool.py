@@ -2,7 +2,10 @@ from django.conf import settings
 from urllib.parse import urlencode,parse_qs
 import json
 import requests
+import base64
+from Crypto.Cipher import AES
 
+#qq认证工具
 class QQAuth(object):
     def __init__(self,clientId=None,clientSecret=None,redirectUrl=None):
         self.clientId=clientId
@@ -57,3 +60,28 @@ class QQAuth(object):
         except Exception as e:
             print(e)
             raise Exception("返回qq认证token报错")
+
+
+#微信认证工具
+class WXBizDataCrypt:
+    def __init__(self, appId, sessionKey):
+        self.appId = appId
+        self.sessionKey = sessionKey
+
+    def decrypt(self, encryptedData, iv):
+        # base64 decode
+        sessionKey = base64.b64decode(self.sessionKey)
+        encryptedData = base64.b64decode(encryptedData)
+        iv = base64.b64decode(iv)
+
+        cipher = AES.new(sessionKey, AES.MODE_CBC, iv)
+
+        decrypted = json.loads(self._unpad(cipher.decrypt(encryptedData)))
+
+        if decrypted['watermark']['appid'] != self.appId:
+            raise Exception('Invalid Buffer')
+
+        return decrypted
+
+    def _unpad(self, s):
+        return s[:-ord(s[len(s)-1:])]
