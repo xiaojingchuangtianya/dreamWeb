@@ -30,7 +30,6 @@ def registerView(request):
 
 #登陆界面可以选择跳转到具体的页面，这个页面记住redirectUrl，然后如果到微信或者qq登陆时也会传过去，最终登陆成功自动跳转
 def loginView(request):
-    
     if request.method =="GET":
         redirectUrl = request.GET.get("redirectUrl", "/")
         print(request.GET.get("redirectUrl",None))#一个跳转的url
@@ -56,10 +55,13 @@ def qqLoginView(request):
         loginUrl=authObj.createURL()
         print(loginUrl)
         return render(request,"qqlogin.html")
-
     return HttpResponse("测试成功")
 
+def wechatLink(request):
+    print(request.body)
+    return HttpResponse("1")
 
+#这里是退出登录
 def logoutView(request):
     logout(request)
     return redirect("/")
